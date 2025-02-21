@@ -29,7 +29,11 @@ function handleGuess(char) {
 
 <template>
 
+  <h1>Hangman</h1>
+
   <input type="text" v-model="input" />
+
+  <div>
 
   <div class="blank">
     <Blank v-for="char in guesses" :key="char" :char="char" />
@@ -38,6 +42,8 @@ function handleGuess(char) {
   <div class="keyboard">
     <Letter v-for="char in alphabet" :key="char" :char="char" @guess="handleGuess" />
   </div>
+
+</div>
 
 </template>
 
