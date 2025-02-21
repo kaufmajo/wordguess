@@ -4,18 +4,23 @@ import Letter from './Letter.vue'
 import Blank from './Blank.vue'
 
 const alphabet = Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i));
-const word = ref(Array.from('hello'));
-const guesses = ref(Array.from({ length: word.value.length }, () => ''));
+const input = ref('hello');
+const word = Array.from(input.value);
+let guesses = ref(Array.from({ length: word.length }, () => ''));
 const maxGuesses = 6;
 
+watch(input, (newVal) => {
+  guesses = Array.from(Array.from({ length: newVal.length }, () => ''));
+});
+
 function handleGuess(char) {
-  word.value.map((letter, index) => {
+  word.map((letter, index) => {
     if (letter === char) {
       guesses.value[index] = char;
     }
   })
 
-  if (guesses.value.join('') === word.value.join('')) {
+  if (guesses.value.join('') === word.join('')) {
     alert('You win!');
   }
 };
@@ -23,6 +28,8 @@ function handleGuess(char) {
 </script>
 
 <template>
+
+  <input type="text" v-model="input" />
 
   <div class="blank">
     <Blank v-for="char in guesses" :key="char" :char="char" />
